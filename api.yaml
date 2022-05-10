@@ -1,0 +1,231 @@
+swagger: "2.0"
+info:
+  title: Dating API
+  description: This is Dating API Documentation
+  version: one
+
+schemes: [http, https]
+
+#Return Users From get request
+paths:
+  /api/v1/users/userSignup:
+    post:
+      tags:
+        - User
+      summary: User registration
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - profileImage
+              - userName
+              - name
+              - age
+              - gender
+              - profession
+              - height
+              - physicalType
+              - region
+              - lookingFor
+              - sexualOrientation
+              - relationshipStatus
+              - education
+              - nationality
+              - religion
+              - children
+              - autoLocation
+              - annualIncome
+              - alcoholConsumption
+              - hobbies
+              - zipCode
+              - smokes
+              - bodyArt
+              - vaccine
+              - sign
+              - festiches
+              - whereAmINow
+              - personality
+              - qualities
+              - GeolocationByDistance
+              - onlineSeen
+              - hideAge
+              - yourPlan
+              - expectFromRelationship
+              - aboutMe
+              - email
+              - password
+              - passwordConfirm
+            properties:
+              profileImage:
+                type: string
+              userName:
+                type: string
+              name:
+                type: string
+              age:
+                type: integer
+              gender:
+                type: string
+              profession:
+                type: string
+              height:
+                type: string
+              physicalType:
+                type: string
+              region:
+                type: string
+              lookingFor:
+                type: string
+              sexualOrientation:
+                type: string
+              relationshipStatus:
+                type: string
+              education:
+                type: string
+              nationality:
+                type: string
+              religion:
+                type: string
+              children:
+                type: string
+              autoLocation:
+                type: string
+              annualIncome:
+                type: string
+              alcoholConsumption:
+                type: boolean
+              hobbies:
+                type: string
+              zipCode:
+                type: integer
+              smokes:
+                type: boolean
+              bodyArt:
+                type: string
+              vaccine:
+                type: string
+              sign:
+                type: string
+              festiches:
+                type: string
+              whereAmINow:
+                type: string
+              personality:
+                type: string
+              qualities:
+                type: string
+              GeolocationByDistance:
+                type: string
+              onlineSeen:
+                type: boolean
+              hideAge:
+                type: boolean
+              yourPlan:
+                type: string
+              expectFromRelationship:
+                type: string
+              aboutMe:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              passwordConfirm:
+                type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/users/userLogin:
+    post:
+      tags:
+        - User
+      summary: User login
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/admin/adminSignup:
+    post:
+      tags:
+        - Admin
+      summary: Admin Signup
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - email
+              - password
+              - profileImage
+              - name
+              - passwordConfirm
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+              profileImage:
+                type: string
+              name:
+                type: string
+              passwordConfirm:
+                type: string
+
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/admin/adminLogin:
+    post:
+      tags:
+        - Admin
+      summary: Admin login
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        "200":
+          description: OK
