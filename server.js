@@ -38,8 +38,8 @@ const Class = require("./models/classModel");
 
 
 const bot = new TelegramBot(process.env.BOTTOKEN, {polling: true});
-// const dbUrl = `${process.env.DB_URL}`; // For Server Data Base.
-const dbUrl=`${process.env.DB_URL_L}` //For Local Data Base.
+const dbUrl = `${process.env.DB_URL}`; // For Server Data Base.
+// const dbUrl=`${process.env.DB_URL_L}` //For Local Data Base.
 
 app.set("view engine", "ejs");
 app.set("/views", path.join(__dirname, "/views"));
