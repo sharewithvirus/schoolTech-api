@@ -1,30 +1,68 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const InsAdmin = require("./insAdminModel");
+const Student = require("./studentModel");
+const User = require("./userModel");
 
 const AdminSchema = new mongoose.Schema({
-  name: {
+  adminUserName: {
+    type: String,
+    unique: true,
+  },
+  adminName: {
     type: String,
     required: true,
   },
-  email: {
+  adminEmail: {
     type: String,
     required: true,
     unique: true,
   },
-  photo: {
+  adminPassword: {
     type: String,
-  },
-  password: {
-    type: String,
-    required: true,
     minlength: 8,
     select: false,
   },
-  passwordConfirm: {
+  adminPasswordConfirm: {
     type: String,
-    required: true,
     minlength: 8,
   },
+  pendingInstitute: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "InsAdmin",
+    }
+  ],
+  approveInstitute: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "InsAdmin",
+    }
+  ],
+  blockedInstitute: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "InsAdmin",
+    }
+  ],
+  student: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    }
+  ],
+  user: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
+  blockedUser: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
 });
 
 AdminSchema.pre("save", async function (next) {

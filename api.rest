@@ -1,0 +1,7 @@
+get http://localhost:8080/attendance?id=5&time=2022-05-16%2011:14:30&cid=0004715065
+content-type: application/json
+
+# {
+#     "name": "sample",
+#     "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+# }

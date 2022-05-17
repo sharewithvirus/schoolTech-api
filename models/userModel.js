@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const UserSchema = new mongoose.Schema({
-  profileImage: {
+  // profileImage: {
+  //   type: String,
+  //   required: true,
+  // },
+  userStatus: {
     type: String,
-    required: true,
+    default: "Not Active"
   },
   userName: {
     type: String,
@@ -22,96 +26,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  profession: {
-    type: String,
-    required: true,
-  },
-  height: {
-    type: String,
-  },
-  physicalType: {
-    type: String,
-  },
-  region: {
-    type: String,
-  },
-  lookingFor: {
-    type: String,
-  },
-  sexualOrientation: {
-    type: String,
-  },
-  relationshipStatus: {
-    type: String,
-  },
-  education: {
-    type: String,
-  },
   nationality: {
     type: String,
   },
-  religion: {
-    type: String,
-  },
-  children: {
-    type: String,
-  },
-  autoLocation: {
-    type: String,
-  },
-  annualIncome: {
-    type: String,
-  },
-  alcoholConsumption: {
-    type: Boolean,
-  },
-  hobbies: {
-    type: String,
-  },
-  zipCode: {
-    type: Number,
-  },
-  smokes: {
-    type: Boolean,
-  },
-  bodyArt: {
-    type: String,
-  },
-  vaccine: {
-    type: String,
-  },
-  sign: {
-    type: String,
-  },
-  festiches: {
-    type: String,
-  },
-  whereAmINow: {
-    type: String,
-  },
-  personality: {
-    type: String,
-  },
-  qualities: {
-    type: String,
-  },
-  GeolocationByDistance: {
-    type: String,
-  },
-  onlineSeen: {
-    type: Boolean,
-  },
-  hideAge: {
-    type: Boolean,
-  },
-  yourPlan: {
-    type: String,
-    // enum: ["free", "gold", "diamond"],
-  },
-  expectFromRelationship: {
-    type: String,
-  },
-  aboutMe: {
+  telegramChatId: {
     type: String,
   },
   email: {
