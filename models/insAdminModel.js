@@ -52,7 +52,7 @@ const InsAdminSchema = new mongoose.Schema({
             ref: "Staff",
         }
     ],
-    student: [
+    studentText: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Student"

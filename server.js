@@ -59,7 +59,7 @@ mongoose
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     //   credentials: true,
   })
@@ -187,9 +187,36 @@ function runTimeUpdate(){
 app.get("/", async (req, res) => {
   try {
     const admins = await Admin.find({});
-    res.send(admins);
+    res.send("Welcome to School Tech.");
   } catch {
     console.log(`SomeThing went wrong at this endPoint(/)`);
+  }
+});
+
+app.get("/attendance?", 
+async (req, res) => {
+  try {
+    const { id, time, cid } = req.query;
+    let timeNow = new Date();
+    const rawAttendance = await new RawAttendance({
+      deviceId: id,
+      cardId: cid,
+      deviceAttendanceTime: moment(time).format(),
+      timeToHit: moment(timeNow).format(),
+    });
+    await rawAttendance.save();
+    console.log("Attendance Save")
+    res.send({
+      message: "In",
+    });
+    try {
+      axios.post(`http://localhost:8080/student-attendance/mark-present/${rawAttendance._id}`, rawAttendance)
+    } catch (error) {
+      console.log(`Error While Posting Attendance, Error:- ${error}`)
+    }
+
+  }catch {
+    console.log(`SomeThing went wrong at this endPoint(/attendance?)`);
   }
 });
 
@@ -327,7 +354,7 @@ if(moment(todayDateTime).format() < moment(morningLTime).format() && moment(toda
   msg = `Your Ward is Out From School.`
 }
 if(studentText.telegramChatId){
-  bot.sendMessage(studentText.telegramChatId, msg)
+  bot.sendMessage(studentText.telegramChatId, msg);
   // const bot = new TelegramBot(token, 636502433);
     // async function sendMessage() {
     //   const response = await bot.sendMessage( msg, Number(studentText.telegramChatId));
@@ -342,7 +369,7 @@ if(studentText.telegramChatId){
 
   // const createIns = async() => {
   //   try {
-  //     const adminText = await Admin.findById({_id: "6282c12a432b254ea11878e7" })
+  //     const adminText = await Admin.findById({_id: `${process.env.ADMIN_ID_Server}` })
   //     console.log(adminText)
   //     const newIns = new InsAdmin({
   //       insName : "Bal Nikunj",
@@ -363,7 +390,7 @@ if(studentText.telegramChatId){
 
   // const createClass = async() => {
   //   try {
-  //         const insAdminText = await InsAdmin.findById({_id: "6282df0e7f88f82ed3ad01a1" });
+  //         const insAdminText = await InsAdmin.findById({_id: "62832a153368d467f6f4b697" });
   //         console.log(insAdminText)
   //         const newIns = new Class({
   //           classCode : "CA-07-A",
@@ -381,11 +408,12 @@ if(studentText.telegramChatId){
 
   // createClass();
 
-  // Import Excel File to MongoDB database
+  // Import Excel File to MongoDB database  
 // const insertStudent = async(jsonPath) => {
+//   try {
 //   const studentData = require(jsonPath);
-//     console.log(studentData)
-//     const adminText = await Admin.findById({ _id: process.env.ADMIN_ID })
+//     // console.log(studentData)
+//     const adminText = await Admin.findById({ _id: process.env.ADMIN_ID_Server })
 //     const insText = await InsAdmin.findById({ _id: studentData[0].institute})
 // for (let i = 0; i < studentData.length; i++) {
 //       let dbDate =   studentData[i].dob;
@@ -398,7 +426,7 @@ if(studentText.telegramChatId){
 //       DOB.setYear(year);
 //       DOB.setHours(00, 00, 00)
 
-//       const newStudent = new Student({
+//       const StudentText = new Student({
 //         srNumber: studentData[i].SrNumber,
 //         studentFirstName: studentData[i].studentFirstName,
 //         studentMiddleName: studentData[i].studentMiddleName,
@@ -414,12 +442,20 @@ if(studentText.telegramChatId){
 //         classId: studentData[i].classId,
 //         rfCardNumber: studentData[i].rfCardNumber,
 //       })
-//     insText.student.push(newStudent);
-//     adminText.student.push(newStudent);
-//     await newStudent.save();
+//       console.log(StudentText)
+//       console.log(insText);
+//       console.log(adminText);
+//     insText.studentText.push(StudentText._id);
+//     adminText.studentText.push(StudentText._id);
+//     await StudentText.save();
 //   }
+//   console.log("Data manipulated");
 //   await insText.save();
 //   await adminText.save();
+//   console.log("Roughs Run Successfully")
+// } catch (error) {
+//   console.log(`Something Went Wrong at Path(insertStudent) error:- ${error}`)
+// }
 // }
 // insertStudent(`${__dirname}/filesUpload/studentData.json` )
 
