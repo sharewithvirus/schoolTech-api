@@ -21,7 +21,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = `${process.env.BOTTOKEN}`;
 
 // // Create a bot that uses 'polling' to fetch new updates
-// const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, {polling: true});
 
 
 // -------------Import Models ----------------------
@@ -37,7 +37,7 @@ const moment = require("moment");
 const Class = require("./models/classModel");
 
 
-const bot = new TelegramBot(process.env.BOTTOKEN, {polling: true});
+// const bot = new TelegramBot(`${process.env.BOTTOKEN}`, {polling: true});
 const dbUrl = `${process.env.DB_URL}`; // For Server Data Base.
 // const dbUrl=`${process.env.DB_URL_L}` //For Local Data Base.
 
@@ -312,7 +312,7 @@ app.post("/super-admin/:id/new-ins-creation", async (req, res) => {
 
 // Attendance Marking and Send Msg to Student
 app.post("/student-attendance/mark-present/:aid", async (req, res) => {
-  try {
+  // try {
     console.log("api Rought Hit")
   const { aid } = req.params;
   console.log(aid)
@@ -341,30 +341,34 @@ app.post("/student-attendance/mark-present/:aid", async (req, res) => {
   let morningSTime = new Date();
       morningSTime.setHours(06, 00, 00);
   let morningLTime = new Date();
-      morningLTime.setHours(09, 00, 00);
+      morningLTime.setHours(11, 00, 00);
   let eveningSTime = new Date();
       eveningSTime.setHours(12, 00, 00);
   let eveningLTime = new Date();
-      eveningLTime.setHours(03, 00, 00);
+      eveningLTime.setHours(05, 00, 00);
+      console.log(moment(morningSTime).format())
+      console.log(moment(morningLTime).format())
+      console.log(moment(eveningSTime).format())
+      console.log(moment(eveningLTime).format())
       
-    let msg = ""
-if(moment(todayDateTime).format() < moment(morningLTime).format() && moment(todayDateTime).format() > moment(morningSTime).format()){
-  msg = `Your Ward ${studentText.studentFirstName} ${studentText.studentMiddleName} ${studentText.studentLastName} is Present in School at ${moment(attendanceText.attendanceTime).format('LT')}.`
-}else if(moment(todayDateTime).format() < moment(eveningLTime).format() && moment(todayDateTime).format() > moment(eveningSTime).format()){
-  msg = `Your Ward is Out From School.`
-}
+    let msg = `Your Ward ${studentText.studentFirstName} ${studentText.studentLastName} is Out from School at ${moment(todayDateTime).format('LT')}`
+// if(moment(todayDateTime).format() < moment(morningLTime).format() && moment(todayDateTime).format() > moment(morningSTime).format()){
+//   msg = `Your Ward ${studentText.studentFirstName} ${studentText.studentMiddleName} ${studentText.studentLastName} is Present in School at ${moment(attendanceText.attendanceTime).format('LT')}.`
+// }else if(moment(todayDateTime).format() < moment(eveningLTime).format() && moment(todayDateTime).format() > moment(eveningSTime).format()){
+//   msg = `${studentText.studentFirstName} ${studentText.studentMiddleName} ${studentText.studentLastName} is Out from School at ${moment(attendanceText.attendanceTime).format('LT')}`
+// }
 if(studentText.telegramChatId){
   bot.sendMessage(studentText.telegramChatId, msg);
   // const bot = new TelegramBot(token, 636502433);
-    // async function sendMessage() {
-    //   const response = await bot.sendMessage( msg, Number(studentText.telegramChatId));
-    //   console.log(response)
-    // }
-    sendMessage();
+  //   async function sendMessage() {
+  //     const response = await bot.sendMessage( msg, Number(studentText.telegramChatId));
+  //     console.log(response)
+  //   }
+    // sendMessage();
 }
-  } catch (error) {
-    console.log(`something Went Wrong at path (/student-attendance/mark-present/:aid), error:- ${error}`)  
-  }
+  // } catch (error) {
+  //   console.log(`something Went Wrong at path (/student-attendance/mark-present/:aid), error:- ${error}`)  
+  // }
 });
 
   // const createIns = async() => {
@@ -408,13 +412,17 @@ if(studentText.telegramChatId){
 
   // createClass();
 
-  // Import Excel File to MongoDB database  
+// Import Excel File to MongoDB database  
 // const insertStudent = async(jsonPath) => {
-//   try {
+//   // try {
 //   const studentData = require(jsonPath);
-//     // console.log(studentData)
+//     console.log(studentData)
 //     const adminText = await Admin.findById({ _id: process.env.ADMIN_ID_Server })
-//     const insText = await InsAdmin.findById({ _id: studentData[0].institute})
+//     const insText = await InsAdmin.findById({ _id: "62832a153368d467f6f4b697" })
+//     const classText = await Class.findById({ _id: "62832fae15ab21919082c168" })
+//     console.log(adminText)
+//     console.log(insText)
+//     console.log(classText)
 // for (let i = 0; i < studentData.length; i++) {
 //       let dbDate =   studentData[i].dob;
 //   let date = dbDate.slice(0, 2);
@@ -438,26 +446,30 @@ if(studentText.telegramChatId){
 //         mobileNumber1: studentData[i].mobileNumber1,
 //         mobileNumber2: studentData[i].mobileNumber2,
 //         aadharNumber: studentData[i].aadharNumber,
-//         institute: studentData[i].institute,
-//         classId: studentData[i].classId,
+//         institute: insText._id,
+//         classId: classText._id,
 //         rfCardNumber: studentData[i].rfCardNumber,
+//         telegramChatId: studentData[i].telegramChatId,
 //       })
 //       console.log(StudentText)
 //       console.log(insText);
 //       console.log(adminText);
 //     insText.studentText.push(StudentText._id);
 //     adminText.studentText.push(StudentText._id);
+//     classText.approveStudent.push(StudentText._id);
 //     await StudentText.save();
 //   }
 //   console.log("Data manipulated");
+//   await classText.save();
 //   await insText.save();
 //   await adminText.save();
+
 //   console.log("Roughs Run Successfully")
 // } catch (error) {
 //   console.log(`Something Went Wrong at Path(insertStudent) error:- ${error}`)
 // }
 // }
-// insertStudent(`${__dirname}/filesUpload/studentData.json` )
+// insertStudent(`${__dirname}/filesUpload/excel-to-json.json` )
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Server is running on port ${port}!`));

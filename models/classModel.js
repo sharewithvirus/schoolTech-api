@@ -22,7 +22,7 @@ ClassTeacher: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Staff",
 },
-student: [
+approveStudent: [
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Student",
