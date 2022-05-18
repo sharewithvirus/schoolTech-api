@@ -350,8 +350,9 @@ app.post("/student-attendance/mark-present/:aid", async (req, res) => {
       console.log(moment(morningLTime).format())
       console.log(moment(eveningSTime).format())
       console.log(moment(eveningLTime).format())
-      
-    let msg = `Your Ward ${studentText.studentFirstName} ${studentText.studentLastName} is Out from School at ${moment(todayDateTime).format('LT')}`
+    
+    let todayTime = new Date();
+    let msg = `Your Ward ${studentText.studentFirstName} ${studentText.studentLastName} is Out from School at ${moment(todayTime).format('LT')}`
 // if(moment(todayDateTime).format() < moment(morningLTime).format() && moment(todayDateTime).format() > moment(morningSTime).format()){
 //   msg = `Your Ward ${studentText.studentFirstName} ${studentText.studentMiddleName} ${studentText.studentLastName} is Present in School at ${moment(attendanceText.attendanceTime).format('LT')}.`
 // }else if(moment(todayDateTime).format() < moment(eveningLTime).format() && moment(todayDateTime).format() > moment(eveningSTime).format()){
